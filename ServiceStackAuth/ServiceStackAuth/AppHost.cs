@@ -22,7 +22,7 @@ namespace ServiceStackAuth
 
         public override void Configure(Container container)
         {
-            Plugins.Add(new CorsFeature(allowCredentials: true, allowedHeaders: "Content-Type, Authorization", allowOriginWhitelist: new[] { "http://localhost:9002"}));
+            Plugins.Add(new CorsFeature(allowCredentials: true, allowedHeaders: "Content-Type, Authorization", allowOriginWhitelist: GetOriginWhiteList()));
             Plugins.Add(new AuthFeature(() => new AuthUserSession(),
                 new IAuthProvider[] {
                 new CredentialsAuthProvider(),
@@ -40,9 +40,14 @@ namespace ServiceStackAuth
             container.Register<IUserAuthRepository>(userRep);
             container.Register(RavenGlobal.DocumentStore);
         }
+
+            string[] GetOriginWhiteList()
+            {
+                return ConfigurationManager.AppSettings["OriginWhitelist"].ToString().Split(';');
+            }
     }
 
-
+   
 
     public static class RavenGlobal
     {

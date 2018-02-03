@@ -37,7 +37,7 @@ namespace ServiceStackAuth.Tests
         public void CanCreateUser()
         {
             var service = appHost.Container.Resolve<UserManagementCommandServices>();
-            var response = (ResponseStatus)service.Any(new CreateUser { UserName = "Hamo", Password = "Soso", Email = "Hamo@mail.com", Roles = new List<UserRole>() { new UserRole {  Id ="admin"    } } } );
+            var response = (ResponseStatus)service.Any(new CreateUser { UserName = "Admin", Password = "admin", Email = "admin@mail.com", DisplayName="Administrator", Roles = new List<UserRole>() { new UserRole {  Id ="admin"    } } } );
             Assert.That(response.IsErrorResponse, Is.False);
         }
 
